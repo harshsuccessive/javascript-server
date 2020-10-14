@@ -1,0 +1,17 @@
+#this file is used to define the coding styles for different developers
+#in the codebases it can be applied to different projects as well and there
+#can be more than one editorconfig files and they follow the top to bottom approach 
+root= true
+
+[*]
+#for intendations
+indent_style = space
+indent_size = 4
+
+#character encoding
+charset = utf-8
+
+#newline formats
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line = cr
