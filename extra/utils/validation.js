@@ -6,7 +6,7 @@ const user =[{
         reviewerEmail: 'reviewer1@successive.tech',
         }];
 
-   function validateemail(email)
+   function validateEmail(email)
    {
        let regx =/^([a-zA-z0-9/.-]+)@(successive).(tech)$/
         return regx.test(email);
@@ -17,8 +17,7 @@ const user =[{
        let valid=0;
        let invalid =0;
        user.forEach(element => {
-           const {traineeEmail}= element;
-           const {reviewerEmail}= element;
+           const {traineeEmail,reviewerEmail}= element;
            if(validateemail(traineeEmail)==true)
            {
                valid=valid+1;
