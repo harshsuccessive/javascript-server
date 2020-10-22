@@ -18,7 +18,7 @@ const user =[{
        let invalid =0;
        user.forEach(element => {
            const {traineeEmail,reviewerEmail}= element;
-           if(validateemail(traineeEmail)==true)
+           if(validateEmail(traineeEmail)==true)
            {
                valid=valid+1;
                console.log("valid user = ",traineeEmail)
@@ -28,7 +28,7 @@ const user =[{
             console.log("invalid user = ",traineeEmail)
                invalid=invalid+1;
            }
-           if(validateemail(reviewerEmail)==true)
+           if(validateEmail(reviewerEmail)==true)
            {
             console.log("valid user = ",reviewerEmail)
             valid=valid+1;
