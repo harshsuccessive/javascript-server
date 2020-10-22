@@ -12,7 +12,7 @@ const user =[{
         return regx.test(email);
    }
 
-   function validateuser(user)
+   function validateUser(user)
    {
        let valid=0;
        let invalid =0;
@@ -44,4 +44,4 @@ const user =[{
    }
 
 
-   validateuser(user);
+   validateUser(user);
