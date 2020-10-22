@@ -1,5 +1,4 @@
-let d;
-let permissions =
+export let permissions =
 {
     'getUsers': {
     all: ['head-trainer'],
@@ -15,7 +14,4 @@ let permissions =
         }
             
     }
-    export default function hasPermission(moduleName, role, permissionType){
-        console.log(permissions[moduleName][permissionType].includes(role));
-        };
-    //hasPermission('getUsers','trainer','read');
+    

@@ -1,7 +1,7 @@
 let x,a;
-n=process.argv[2]
-equilateral(n)
-function equilateral (x)
+// n=process.argv[2]
+// equilateral(n)
+export default function equilateral (x)
 {
     console.log("print a equilateral triangle with rows "+x);
    

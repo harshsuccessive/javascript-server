@@ -1,48 +1,40 @@
-const user =[{
-    traineeEmail: 'trainee1@successive.tech',
-    reviewerEmail: 'reviewer1@successive.tech',
-    },{
-        traineeEmail: 'trainee1@succssive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-        }];
+import {validateEmail} from './helpers'
+        let invalidUsers = [];
+        let validUsers =[];
 
-   function validateemail(email)
-   {
-       let regx =/^([a-zA-z0-9/.-]+)@(successive).(tech)$/
-        return regx.test(email);
-   }
 
-   function validateuser(user)
+  export default function validateUser(user)
    {
-       let valid=0;
-       let invalid =0;
+       let countOfValid=0;
+       let countOfInvalid =0;
        user.forEach(element => {
-           const {traineeEmail}= element;
-           const {reviewerEmail}= element;
-           if(validateemail(traineeEmail)==true)
+           const {traineeEmail,reviewerEmail}= element;
+           if(validateEmail(traineeEmail)==true)
            {
-               valid=valid+1;
-               console.log("valid user = ",traineeEmail)
+            countOfValid=countOfValid+1;
+               validUsers.push(traineeEmail);
            }
            else
            {
-            console.log("invalid user = ",traineeEmail)
-               invalid=invalid+1;
+            invalidUsers.push(traineeEmail);
+            countOfInvalid=countOfInvalid+1;
            }
-           if(validateemail(reviewerEmail)==true)
+           if(validateEmail(reviewerEmail)==true)
            {
-            console.log("valid user = ",reviewerEmail)
-            valid=valid+1;
+            validUsers.push(reviewerEmail);
+            countOfValid=countOfValid+1;
            }
            else
            {
-            console.log("invalid user = ",reviewerEmail)
-               invalid=invalid+1;
+            invalidUsers.push(reviewerEmail);
+            countOfInvalid=countOfInvalid+1;
            }
        });
-       console.log("Count of valid users = ",valid);
-       console.log("count of invalid users = ",invalid);
+       console.log("Valid users are ",validUsers);
+       console.log("Count of valid users = ",countOfValid);
+       console.log("Invalid users are ",invalidUsers);
+       console.log("count of invalid users = ",countOfInvalid);
    }
 
 
-   validateuser(user);
+   //validateUser(user);
