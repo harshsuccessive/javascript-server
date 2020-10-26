@@ -12,7 +12,7 @@ export default function diamond(x) {
     for ( let i = 0; i < x; i++ ) {
         a = '';
     for ( let j = i; j < x - 1 ; j++ )
-        a += '';
+        a += ' ';
     for ( let z = i; z >= 0; z-- )
         a += '* ';
 =======
