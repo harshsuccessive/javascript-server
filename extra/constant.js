@@ -14,4 +14,11 @@ export let permissions =
         }
             
     }
+    export const user =[{
+        traineeEmail: 'trainee1@successive.tech',
+        reviewerEmail: 'reviewer1@successive.tech',
+        },{
+            traineeEmail: 'trainee1@succssive.tech',
+            reviewerEmail: 'reviewer1@successive.tech',
+            }];
     

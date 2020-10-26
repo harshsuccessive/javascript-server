@@ -1,4 +1,6 @@
+import {user} from '../constant'
 import {validateEmail} from './helpers'
+
         
   export default function validateUser(user)
    {
@@ -36,4 +38,4 @@ import {validateEmail} from './helpers'
    }
 
 
-   //validateUser(user);
+   validateUser(user);
