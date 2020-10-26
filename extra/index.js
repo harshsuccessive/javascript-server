@@ -9,13 +9,9 @@ equilateral(5);
 
 
 
-const user =[{
-    traineeEmail: 'trainee1@successive.tech',
-    reviewerEmail: 'reviewer1@successive.tech',
-    },{
-        traineeEmail: 'trainee1@succssive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-        }];
+let d;
+d=hasPermission('getUsers','head-trainer','read');
+console.log(d);
 
-hasPermission('getUsers','trainer','read');
+
 validateUser(user);

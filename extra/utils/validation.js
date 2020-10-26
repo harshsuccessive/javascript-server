@@ -1,11 +1,11 @@
+import {user} from '../constant'
 import {validateEmail} from './helpers'
+
         
-
-
   export default function validateUser(user)
    {
-       let invalidUsers = [];
-       let validUsers =[];
+        let invalidUsers = [];
+        let validUsers =[];
        let countOfValid=0;
        let countOfInvalid =0;
        user.forEach(element => {
@@ -38,4 +38,4 @@ import {validateEmail} from './helpers'
    }
 
 
-   //validateUser(user);
+   validateUser(user);

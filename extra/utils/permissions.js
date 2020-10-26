@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 import{permissions} from '../constant'
+=======
+import {permissions} from '../constant'
+
+
+
+>>>>>>> 8e5ec29b98f4ac62767f62c4e2deb8cabd179f3c
 export default function hasPermission(moduleName,role,permissionType){
     for(const [key,value] of Object.entries(permissions))
     {
