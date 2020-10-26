@@ -1,5 +1,4 @@
-export let permissions: Ipermission =   
-{
+export let permissions: Ipermission = {
     'getUsers': {
     all: ['head-trainer'],
     read : ['trainee', 'trainer'],
@@ -12,13 +11,11 @@ export let permissions: Ipermission =
         write : ['trainer'],
         Delete: ['trainee'],
         }
-            
-    }
-    export const user: IUsers[]=[{
+    };
+    export const user: IUsers[] = [{
         traineeEmail: 'trainee1@successive.tech',
         reviewerEmail: 'reviewer1@successive.tech',
-        },{
+        }, {
             traineeEmail: 'trainee1@succssive.tech',
             reviewerEmail: 'reviewer1@successive.tech',
             }];
-    
