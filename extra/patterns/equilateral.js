@@ -1,12 +1,14 @@
 let x,a;
-n=process.argv[2]
-equilateral(n)
-function equilateral (x)
+// n=process.argv[2]
+// equilateral(n)
+export default function equilateral (x)
 {
     console.log("print a equilateral triangle with rows "+x);
    
-    if(x<2 && x>10)
-       return(0);
+    if(x<2 && x>10){
+    console.log("enter the value between 2 to 10");
+    }
+    else{
    
     for(let i=1;i<=x;i++)
      {
@@ -26,4 +28,4 @@ function equilateral (x)
 
      }
 
-}
+}}

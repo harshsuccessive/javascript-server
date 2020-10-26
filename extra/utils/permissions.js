@@ -1,51 +1,35 @@
-let d;
-let permissions =
-{
-    'getUsers': {
-    all: ['head-trainer'],
-    read : ['trainee', 'trainer'],
-    write : ['trainer'],
-    Delete: [],
-    },
-    'getUser1': {
-        all: ['head-trainer'],
-        read : ['trainee', 'trainer'],
-        write : ['trainer'],
-        Delete: ['trainee'],
-        }
-            
-    }
-    const {getUsers,getUser1}= permissions;
-    let f;
-    function hasPermission(moduleName,role,permissionType)
+import {permissions} from '../constant'
+
+
+
+export default function hasPermission(moduleName,role,permissionType){
+    for(const [key,value] of Object.entries(permissions))
     {
-        const {all,read,write,Delete}=moduleName;
-         f = all.includes(role)
-
-        if(f==true)
+        if (key == moduleName)
         {
-            return true
-        }
-        else
-        {
-            if(permissionType=="read")
+            if(value.all.includes(role))
             {
-                f=read.includes(role)
-                return f;
+                return true;
             }
-            else if(permissionType=="write"){
-                f=write.includes(role);
-                return f;
-            }
-            else if(permissionType=="Delete"){
-                f=Delete.includes(role)
-                return f;
-            }
+            else{
+                for(const [key1,value1] of Object.entries(value)){
+                    if(key1== permissionType){
+                        if(Object.values(value1).includes(role))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else{
+                        continue;
+                    }
 
+                }
+            }
+        }
+        else{
+            continue;
         }
 
     }
-    d = hasPermission(getUsers,"head-trainer","Delete");
-    console.log(d);
-    d = hasPermission(getUser1,"trainer","Delete");
-    console.log(d);
+}

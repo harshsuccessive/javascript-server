@@ -1,13 +1,15 @@
 let x,a
-n=process.argv[2];
-diamond(n);
+// n=process.argv[2];
+// diamond(n);
 
-function diamond(x)
+export default function diamond(x)
 {
     console.log("print a diamond with rows "+x);
     
-    if( x<2 && x>10 )
-       return(0);
+    if( x<2 && x>10 ){
+       console.log("enter the value between 2 to 10");
+    }
+    else{
 
     for(let i=0; i<x; i++)
      { 
@@ -35,4 +37,4 @@ function diamond(x)
      console.log(a);
 
      }
-}
+}}

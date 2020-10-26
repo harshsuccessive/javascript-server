@@ -1,21 +1,11 @@
-const user =[{
-    traineeEmail: 'trainee1@successive.tech',
-    reviewerEmail: 'reviewer1@successive.tech',
-    },{
-        traineeEmail: 'trainee1@succssive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-        }];
+import {user} from '../constant'
+import {validateEmail} from './helpers'
+
+        
+  export default function validateUser(user)
+   {
         let invalidUsers = [];
         let validUsers =[];
-
-   function validateEmail(email)
-   {
-       let regx =/^([a-zA-z0-9/.-]+)@(successive).(tech)$/
-        return regx.test(email);
-   }
-
-   function validateUser(user)
-   {
        let countOfValid=0;
        let countOfInvalid =0;
        user.forEach(element => {
