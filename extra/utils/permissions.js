@@ -1,20 +1,5 @@
 let d;
-let permissions =
-{
-    'getUsers': {
-    all: ['head-trainer'],
-    read : ['trainee', 'trainer'],
-    write : ['trainer'],
-    Delete: [],
-    },
-    'getUser1': {
-        all: ['head-trainer'],
-        read : ['trainee', 'trainer'],
-        write : ['trainer'],
-        Delete: ['trainee'],
-        }
-            
-    }
+import {permissions} from '../constant'
     export default function hasPermission(moduleName, role, permissionType){
         return (permissions[moduleName][permissionType].includes(role));
         };

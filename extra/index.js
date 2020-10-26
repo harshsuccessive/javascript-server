@@ -7,7 +7,7 @@ equilateral(5);
 
 
 
-
+let d;
 const user =[{
     traineeEmail: 'trainee1@successive.tech',
     reviewerEmail: 'reviewer1@successive.tech',
@@ -16,5 +16,6 @@ const user =[{
         reviewerEmail: 'reviewer1@successive.tech',
         }];
 
-hasPermission('getUsers','trainer','read');
+d=hasPermission('getUsers','trainer','read');
+console.log(d);
 validateUser(user);
