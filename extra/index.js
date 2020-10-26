@@ -1,11 +1,12 @@
 import {diamond,equilateral} from './patterns';
+import{hasPermission} from './utils';
+import{validateUser} from './utils';
 diamond(5);
 console.log()
 equilateral(5);
 
 
-import{hasPermission} from './utils';
-import{validateUser} from './utils';
+
 
 const user =[{
     traineeEmail: 'trainee1@successive.tech',
