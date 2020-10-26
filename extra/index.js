@@ -7,7 +7,7 @@ equilateral(5);
 import{hasPermission} from './utils';
 import{validateUser} from './utils';
 
-const user =[{
+const user: IUser =[{
     traineeEmail: 'trainee1@successive.tech',
     reviewerEmail: 'reviewer1@successive.tech',
     },{
