@@ -16,6 +16,7 @@ let permissions =
             
     }
     export default function hasPermission(moduleName, role, permissionType){
-        console.log(permissions[moduleName][permissionType].includes(role));
+        return (permissions[moduleName][permissionType].includes(role));
         };
-    //hasPermission('getUsers','trainer','read');
+    d= hasPermission('getUsers','trainer','read');
+console.log(d);
