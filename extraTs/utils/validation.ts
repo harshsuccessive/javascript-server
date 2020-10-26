@@ -1,12 +1,13 @@
 import {validateEmail} from './helpers'
-        let invalidUsers = [];
-        let validUsers =[];
+        
 
 
   export default function validateUser(user: IUsers[]): void
    {
-       let countOfValid=0;
-       let countOfInvalid =0;
+    let invalidUsers: string[] = [];
+    let validUsers: string[] =[];
+       let countOfValid: number=0;
+       let countOfInvalid: number =0;
        user.forEach(element => {
            const {traineeEmail,reviewerEmail}= element;
            if(validateEmail(traineeEmail)==true)
