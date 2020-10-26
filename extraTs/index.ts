@@ -1,19 +1,15 @@
 import {diamond,equilateral} from './patterns';
+import{hasPermission} from './utils';
+import{validateUser} from './utils';
+import {user} from './constant'
 diamond(5);
 console.log()
 equilateral(5);
 
 
-import{hasPermission} from './utils';
-import{validateUser} from './utils';
-const user =[{
-    traineeEmail: 'trainee1@successive.tech',
-    reviewerEmail: 'reviewer1@successive.tech',
-    },{
-        traineeEmail: 'trainee1@succssive.tech',
-        reviewerEmail: 'reviewer1@successive.tech',
-        }];
 
 
-hasPermission('getUsers','trainer','read');
+let d: boolean;
+d=hasPermission('getUsers','trainer','read');
+console.log(d);
 validateUser(user);
