@@ -1,10 +1,11 @@
 import {validateEmail} from './helpers'
-        let invalidUsers = [];
-        let validUsers =[];
+        
 
 
   export default function validateUser(user)
    {
+       let invalidUsers = [];
+       let validUsers =[];
        let countOfValid=0;
        let countOfInvalid =0;
        user.forEach(element => {
