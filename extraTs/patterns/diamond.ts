@@ -1,8 +1,8 @@
-let a;
+let a: string;
 // n=process.argv[2];
 // diamond(n);
 
-export default function diamond(x) {
+export default function diamond(x: number): void {
     console.log('print a diamond with rows ' + x);
     if ( x < 2 && x > 10 ) {
        console.log('enter the value between 2 to 10');

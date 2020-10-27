@@ -1,7 +1,7 @@
-let a
+let a: string;
 // n=process.argv[2]
 // equilateral(n)
-export default function equilateral (x) {
+export default function equilateral (x: number): void {
     console.log('print a equilateral triangle with rows ' + x);
     if ( x < 2 && x > 10 ) {
        console.log('enter the value between 2 to 10');
