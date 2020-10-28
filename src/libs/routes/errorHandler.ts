@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-export default (err, req: Request, res: Response, next: NextFunction ) =>{
+export const errorHandler = (err, req: Request, res: Response, next: NextFunction ) =>{
     res.json({
         error: err.error,
         status: err.code,

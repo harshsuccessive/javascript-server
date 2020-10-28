@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import { notFoundHandler, errorHandler } from './libs/routes';
+import { errorHandler,notFoundRoute } from './libs/routes';
 
 
 class Server{
@@ -30,7 +30,7 @@ class Server{
 
 
 
-        this.app.use(notFoundHandler);
+        this.app.use(notFoundRoute);
 
         this.app.use(errorHandler);
 
