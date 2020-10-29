@@ -1,7 +1,8 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import { errorHandler,notFoundRoute } from './libs/routes';
+import  errorHandler  from './libs/routes/errorHandler'
+import  notFoundRoute from './libs/routes/notFoundRoute'
 
 
 class Server{
@@ -11,8 +12,9 @@ class Server{
     }
 
     bootstrap(){
-        this.setupRoutes();
         this.initBodyParser();
+        this.setupRoutes();
+        
         return this;
     }
 
