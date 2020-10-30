@@ -4,7 +4,6 @@ import TraineeController from './controller';
 import validationHandler from '../../libs/validationHandler';
 import validation from './validation';
 const traineeRouter =  Router();
-//console.log(config.get);
 traineeRouter.route('/')
             .get( validationHandler(validation.get), TraineeController.get )
             .post(validationHandler(validation.create), TraineeController.create)
