@@ -24,7 +24,12 @@ class Server{
 
         const { app } = this;
 
-        this.app.get('/health-check',(req, res, next) =>{
+        this.app.use((req: Request, res: express.Response, next: express.NextFunction ) =>{
+            console.log(req.body);
+            next()
+        })
+
+        this.app.use('/health-check',(req: Request, res: express.Response, next: express.NextFunction) =>{
             console.log("Inside second middleware");
             res.send('I am Ok');
         });
@@ -43,7 +48,7 @@ class Server{
 
 
     public initBodyParser(){
-        this.app.use(bodyParser.json({ type: 'application/*+json' }));
+        this.app.use(bodyParser.json());
 
     }
 
