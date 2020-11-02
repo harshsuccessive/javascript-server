@@ -14,7 +14,8 @@ const config = { create:
         name:
         { 
             required: true,
-            regex: '', in: ['body'],
+            regex: '',
+            in: ['body'],
             errorMessage: 'Name is required',
         }
     },
@@ -29,7 +30,7 @@ const config = { create:
                 required: false,
                 default: 0,
                 number: true,
-                in: ['query'],
+                in: ['query','body'],
                 errorMessage: 'Skip is invalid', 
             },
         
@@ -43,10 +44,17 @@ const config = { create:
     
     update:
     {
-        id: { required: true, string: true, in:['body'] },
+        id: { required: true, string: true, in:['body','query'] },
         dataToUpdate: {
-            in: ['body'], required: true, isObject: true,
-            custom: function (dataToUpdate) { }, 
+            in: ['body'], 
+            required: true,
+            isObject: true,
+            custom: function (dataToUpdate) {
+                console.log('dataToUpdate', dataToUpdate);
+                 throw { 
+                     error: 'Error Occured', message: 'Message' 
+                 }
+             }, 
         }
     }
 
