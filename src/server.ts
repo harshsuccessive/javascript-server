@@ -1,8 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import  errorHandler  from './libs/routes/errorHandler'
-import  notFoundRoute from './libs/routes/notFoundRoute'
+import  errorHandler  from './libs/routes/errorHandler';
+import  notFoundRoute from './libs/routes/notFoundRoute';
+import routes from './router';
 
 
 class Server{
@@ -23,12 +24,12 @@ class Server{
 
         const { app } = this;
 
-
-
         this.app.get('/health-check',(req, res, next) =>{
             console.log("Inside second middleware");
             res.send('I am Ok');
         });
+
+        this.app.use('/api', routes);
 
 
 
