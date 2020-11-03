@@ -25,40 +25,40 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
         console.log(value);
         console.log(req.method);
         if (item && item.required) {
-            if(req.method == 'POST' || req.method == 'PUT'){
-                if (body !== keys.length) {
-                    next({ 
+            if ( req.method === 'POST' || req.method === 'PUT' ) {
+                if ( body !== keys.length ) {
+                    next({
                         error: item.errorMessage,
                         message: 'data is missing ',
                         status: 404
                     });
                 }
             }
-            if(req.method == 'GET'){
-                if (query !== keys.length) {
-                    next({ 
+            if ( req.method === 'GET' ) {
+                if ( query !== keys.length ) {
+                    next({
                         error: item.errorMessage,
                         message: 'data is missing ',
                         status: 404
                     });
                 }
             }
-            if(req.method == 'DELETE'){
+            if ( req.method === 'DELETE' ) {
                 if (params !== keys.length) {
                     console.log(keys.length);
-                    next({ 
+                    next({
                         error: item.errorMessage,
                         message: 'data is missing ',
                         status: 404
                     });
                 }
             }
-            if(req.method == 'DELETE'){
+            if ( req.method === 'DELETE' ) {
                 next({
                     error: item.errorMessage,
                     message: 'Id is required',
                     status: 404
-                })
+                });
             }
             if (item.string) {
                 if (!('string' === typeof value[0])) {

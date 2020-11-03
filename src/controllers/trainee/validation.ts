@@ -30,7 +30,7 @@ const config = { create:
                 required: false,
                 default: 0,
                 number: true,
-                in: ['query','body'],
+                in: ['query'],
                 errorMessage: 'Skip is invalid', 
             },
         
