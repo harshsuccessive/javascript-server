@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import TraineeController from './controller';
-import validationHandler from '../../libs/validationHandler';
+import { validationHandler } from '../../libs/validationHandler';
 import validation from './validation';
 const traineeRouter =  Router();
 traineeRouter.route('/')
@@ -11,5 +11,3 @@ traineeRouter.route('/')
             .delete(validationHandler(validation.delete), TraineeController.Delete);
 
 export default traineeRouter;
-
-  
