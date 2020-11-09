@@ -72,7 +72,7 @@ class TraineeController {
 
     }
 
-    Delete( req: Request, res: Response, next: NextFunction ) {
+    delete( req: Request, res: Response, next: NextFunction ) {
         try{
             console.log("Inside delete method of Trainee Controller");
             res.send({
