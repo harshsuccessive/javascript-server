@@ -52,11 +52,8 @@ class Server{
 
     run(){
         const {app, config :{port}} = this;
-        Database.open('mongodb://localhost:27017/express-training', (err) =>{
-            if(err){
-                console.log(err);
-                return;
-            }
+        Database.open('mongodb://localhost:27017/express-training')
+        .then((res) =>{
             console.log('Successfully connected to mongo');
             app.listen(port,(err) =>{
                 if(err){
@@ -64,9 +61,11 @@ class Server{
                 }
                 console.log('App is running', port)
         });
-        
+
         })
+        .catch(err => console.log(err));
     }
 }
 
 export default Server;
+   
