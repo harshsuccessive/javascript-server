@@ -12,7 +12,7 @@ import { Request, Response, NextFunction } from 'express';
 function checkRegex(stringtovalidate: string, regex: RegExp): boolean {
     return regex.test(stringtovalidate);
 }
-export default ( config ) => (req: Request, res: Response, next: NextFunction) => {
+export const validationHandler = ( config ) => (req: Request, res: Response, next: NextFunction) => {
     const keys = Object.keys(config);
     const body = Object.keys(req.body).length;
     const params = Object.keys(req.query).length;
@@ -24,7 +24,7 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
         });
         console.log(value);
         console.log(req.method);
-        if (item && item.required) {
+        if ( item && item.required ) {
             if ( req.method === 'POST' || req.method === 'PUT' ) {
                 if ( body !== keys.length ) {
                     next({
@@ -35,7 +35,7 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
                 }
             }
             if ( req.method === 'GET' ) {
-                if ( query !== keys.length ) {
+                if (query !== keys.length) {
                     next({
                         error: item.errorMessage,
                         message: 'data is missing ',
@@ -44,7 +44,7 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
                 }
             }
             if ( req.method === 'DELETE' ) {
-                if (params !== keys.length) {
+                if ( params !== keys.length ) {
                     console.log(keys.length);
                     next({
                         error: item.errorMessage,
@@ -60,7 +60,7 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
                     status: 404
                 });
             }
-            if (item.string) {
+            if ( item.string ) {
                 if (!('string' === typeof value[0])) {
                     next({
                         error: item.errorMessage,
@@ -69,8 +69,8 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
                     });
                 }
             }
-            if (item.number) {
-                if (isNaN(value[0])) {
+            if ( item.number ) {
+                if ( isNaN(value[0]) ) {
                     next({
                         error: item.errorMessage,
                         message: `${key} is not number type`,
@@ -78,7 +78,7 @@ export default ( config ) => (req: Request, res: Response, next: NextFunction) =
                     });
                 }
             }
-            if (item.regex) {
+            if ( item.regex ) {
                 const flag = checkRegex(value[0], /^[A-Za-z]+$/);
                 console.log(flag);
                 if (!flag) {
