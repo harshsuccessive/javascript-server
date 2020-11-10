@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import seed from './seedData ';
 
 class Database{
     static open (mongoURL: string) {
@@ -10,6 +11,7 @@ class Database{
                     reject(err);
                     return;
                 }
+                seed();
                 resolve();
             }); 
         });
