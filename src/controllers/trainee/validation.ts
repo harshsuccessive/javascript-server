@@ -1,20 +1,20 @@
 const config = { create:
-     { 
-         id: { 
+     {
+         id: {
              required: true,
              string: true,
-             in:['body'],
-             custom: function(value) {
+             in: ['body'],
+             custom: function (value) {
                  console.log('Value', value);
-                 throw { 
-                     error: 'Error Occured', message: 'Message' 
-                 }
+                 throw {
+                     error: 'Error Occured', message: 'Message'
+                 };
             }
         },
         name:
-        { 
+        {
             required: true,
-            regex: '',
+            regex: /^[a-zA-Z]+$/,
             in: ['body'],
             errorMessage: 'Name is required',
         }
@@ -23,7 +23,7 @@ const config = { create:
           id: {
               required: true,
               errorMessage: 'Id is required', in: ['params']
-            } 
+            }
         },
         get: {
             skip: {
@@ -31,32 +31,33 @@ const config = { create:
                 default: 0,
                 number: true,
                 in: ['query'],
-                errorMessage: 'Skip is invalid', 
+                errorMessage: 'Skip is invalid',
             },
-        
         limit: {
             required: false,
             default: 10,
             number: true,
             in: ['query'],
-            errorMessage: 'Limit is invalid', 
+            errorMessage: 'Limit is invalid',
         }},
-    
     update:
     {
-        id: { required: true, string: true, in:['body','query'] },
+        id: {
+            required: true,
+            string: true,
+            in: ['body'] },
         dataToUpdate: {
-            in: ['body'], 
+            in: ['body'],
             required: true,
             isObject: true,
             custom: function (dataToUpdate) {
                 console.log('dataToUpdate', dataToUpdate);
-                 throw { 
-                     error: 'Error Occured', message: 'Message' 
-                 }
-             }, 
+                 throw {
+                     error: 'Error Occured', message: 'Message'
+                 };
+             },
         }
     }
 
-}
+};
 export default config;
