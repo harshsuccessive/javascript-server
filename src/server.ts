@@ -7,31 +7,30 @@ import routes from './router';
 import Database from './libs/Database'
 
 
-class Server{
-    app
-    constructor(private config){
-        this.app = express()
+class Server {
+    app;
+    constructor (private config) {
+        this.app = express();
     }
 
-    bootstrap(){
+    bootstrap() {
         this.initBodyParser();
         this.setupRoutes();
-        
         return this;
     }
 
-    setupRoutes(){
+    setupRoutes() {
 
 
         const { app } = this;
 
-        this.app.use((req: Request, res: express.Response, next: express.NextFunction ) =>{
+        this.app.use( (req: Request, res: express.Response, next: express.NextFunction ) => {
             console.log(req.body);
-            next()
-        })
+            next();
+        });
 
-        this.app.use('/health-check',(req: Request, res: express.Response, next: express.NextFunction) =>{
-            console.log("Inside second middleware");
+        this.app.use( '/health-check', (req: Request, res: express.Response, next: express.NextFunction) => {
+            console.log('Inside second middleware');
             res.send('I am Ok');
         });
 
@@ -48,13 +47,14 @@ class Server{
     }
 
 
-    public initBodyParser(){
+    public initBodyParser() {
         this.app.use(bodyParser.json());
 
     }
 
 
 
+<<<<<<< HEAD
     run(){
         const {app, config :{port}} = this;
         Database.open('mongodb://localhost:27017/express-training')
@@ -69,6 +69,16 @@ class Server{
 
         })
         .catch(err => console.log(err));
+=======
+    run() {
+        const {app, config : { port } } = this;
+        app.listen( port, (err) => {
+            if ( err ) {
+                console.log(err);
+            }
+            console.log('App is running', port);
+        });
+>>>>>>> d977c8569234285c5405138a13db6b3d337ddd2b
     }
 }
 
