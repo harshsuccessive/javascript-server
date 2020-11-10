@@ -41,11 +41,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-<<<<<<< HEAD
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.13"
-=======
-    "jsonwebtoken": "^8.5.1"
->>>>>>> d977c8569234285c5405138a13db6b3d337ddd2b
   }
 }

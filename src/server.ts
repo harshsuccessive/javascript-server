@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import  errorHandler  from './libs/routes/errorHandler';
 import  notFoundRoute from './libs/routes/notFoundRoute';
 import routes from './router';
-import Database from './libs/Database'
+import Database from './libs/Database';
 
 
 class Server {
@@ -54,33 +54,21 @@ class Server {
 
 
 
-<<<<<<< HEAD
-    run(){
-        const {app, config :{port}} = this;
+    run() {
+        const {app, config: {port}} = this;
         Database.open('mongodb://localhost:27017/express-training')
-        .then((res) =>{
+        .then( ( res ) => {
             console.log('Successfully connected to mongo');
-            app.listen(port,(err) =>{
-                if(err){
+            app.listen(port, (err) => {
+                if ( err ) {
                     console.log(err);
                 }
-                console.log('App is running', port)
+                console.log('App is running', port);
         });
 
         })
         .catch(err => console.log(err));
-=======
-    run() {
-        const {app, config : { port } } = this;
-        app.listen( port, (err) => {
-            if ( err ) {
-                console.log(err);
-            }
-            console.log('App is running', port);
-        });
->>>>>>> d977c8569234285c5405138a13db6b3d337ddd2b
     }
 }
 
 export default Server;
-   

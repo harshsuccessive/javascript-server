@@ -19,4 +19,4 @@ public create (data: any): Promise<IUserModel> {
 public count() {
     return userModel.countDocuments();
     }
-} 
+}

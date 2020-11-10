@@ -11,4 +11,4 @@ password: String
 });
 super(schema, collecion);
 }
-} 
+}

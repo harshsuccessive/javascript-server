@@ -59,8 +59,8 @@ update( req: Request, res: Response, next: NextFunction ) {
     } catch (err) {
             console.log( 'Inside Error', err );
         }
-    }   
-delete( req: Request, res: Response, next: NextFunction ) {
+    }
+delete ( req: Request, res: Response, next: NextFunction ) {
     try {
             console.log( 'Inside delete method of User controller ' );
 
@@ -77,4 +77,4 @@ delete( req: Request, res: Response, next: NextFunction ) {
     }
 }
 
-export default UserController.getInstance(); 
+export default UserController.getInstance();
