@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export class UserSchema extends mongoose.Schema {
-constructor(collecion) {
+constructor(collecion: any) {
 const schema = Object.assign({
 _id: String,
 name: String,
