@@ -57,6 +57,7 @@ const config = {
             required: true,
             string: true,
             in: ['body'],
+        },
             password: {
                 required: true,
                 string: true,
@@ -64,5 +65,4 @@ const config = {
             }
         }
     }
-  };
   export default config;
