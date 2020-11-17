@@ -5,7 +5,7 @@ import validation from './validation';
 import { authMiddleWare}  from '../../libs/routes/authMiddleware';
 
 const UserRouter = Router();
-UserRouter.post('/create', authMiddleWare('getUsers1', 'write'), validationHandler(validation.create), UserController.create);
+UserRouter.post('/create', authMiddleWare('getUsers', 'write'), validationHandler(validation.create), UserController.create);
 UserRouter.post('/login', validationHandler(validation.login), UserController.login);
 UserRouter.get('/me', authMiddleWare('getUsers', 'read'), validationHandler(validation.get), UserController.me);
 // userRoute.get('/getall', authMiddleWare('getUsers', 'read'), validationHandler(validation.get), UserController.getAll);
