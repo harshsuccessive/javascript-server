@@ -7,26 +7,30 @@ import routes from './router';
 import Database from './libs/Database'
 
 
-class Server{
-    app
-    constructor(private config){
-        this.app = express()
+class Server {
+    app;
+    constructor (private config) {
+        this.app = express();
     }
 
-    bootstrap(){
+    bootstrap() {
         this.initBodyParser();
         this.setupRoutes();
-        
         return this;
     }
 
-    setupRoutes(){
+    setupRoutes() {
 
 
         const { app } = this;
 
-        this.app.get('/health-check',(req, res, next) =>{
-            console.log("Inside second middleware");
+        this.app.use( (req: Request, res: express.Response, next: express.NextFunction ) => {
+            console.log(req.body);
+            next();
+        });
+
+        this.app.use( '/health-check', (req: Request, res: express.Response, next: express.NextFunction) => {
+            console.log('Inside second middleware');
             res.send('I am Ok');
         });
 
@@ -43,15 +47,15 @@ class Server{
     }
 
 
-    public initBodyParser(){
-        this.app.use(bodyParser.json({ type: 'application/*+json' }));
+    public initBodyParser() {
+        this.app.use(bodyParser.json());
 
     }
 
 
 
     run(){
-        const {app, config :{port}} = this;
+        const {app, config: { port }} = this;
         Database.open('mongodb://localhost:27017/express-training')
         .then((res) =>{
             console.log('Successfully connected to mongo');

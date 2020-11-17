@@ -1,4 +1,5 @@
 import { Ipermission, IUsers } from './interfaces';
+
 export let permissions: Ipermission = {
     'getUsers': {
     all: ['head-trainer'],

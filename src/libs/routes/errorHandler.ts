@@ -4,8 +4,7 @@ export default function errorHandler (err, req: Request, res: Response, next: Ne
     res.json({
         error: err.error,
         status: err.code,
-        message: err.message || "Error",
+        message: err.message || 'Error',
         timestamp: new Date()
-        
-    })
+    });
 }
