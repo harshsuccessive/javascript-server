@@ -1,14 +1,17 @@
 import * as mongoose from 'mongoose';
 
-export class UserSchema extends mongoose.Schema {
-constructor(collecion: any) {
-const schema = Object.assign({
-_id: String,
-name: String,
-role: String,
-email: String,
-password: String
-});
-super(schema, collecion);
+class UserSchema extends mongoose.Schema {
+  constructor(collections: any) {
+    const baseSchema = Object.assign({
+      _id: String,
+      id: String,
+      name: String,
+      email: String,
+      role: String,
+      password: String,
+    });
+    super(baseSchema, collections);
+  }
 }
-}
+
+export default UserSchema;

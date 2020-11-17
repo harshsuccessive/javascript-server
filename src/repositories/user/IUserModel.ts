@@ -1,8 +1,9 @@
-import * as mongoose from 'mongoose';
+import  * as mongoose from 'mongoose';
+
 export default interface IUserModel extends mongoose.Document {
-    _id: string;
-    name: string;
-    role: string;
-    email: string;
-    password: string;
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  password: string;
 }
