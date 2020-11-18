@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { hasPermission } from '../permission';
+import IRequest from '../../libs/IRequest';
 
-export const authMiddleWare = ( module, permissionType ) => (req: Request, res: Response, next: NextFunction ) => {
+export const authMiddleWare = ( module, permissionType ) => (req: IRequest, res: Response, next: NextFunction ) => {
     try {
 
     console.log( 'the config is ' , module, permissionType );
