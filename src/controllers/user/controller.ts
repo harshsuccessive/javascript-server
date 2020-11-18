@@ -128,7 +128,7 @@ class UserController {
 
                 const { password } = userData;
 
-                if (!bcrypt.comparesync(req.body.password, password)) {
+                if (!bcrypt.compareSync(req.body.password, password)) {
                     res.status(401).send({
                         err: 'Invalid Password',
                         code: 401
