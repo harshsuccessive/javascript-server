@@ -4,10 +4,12 @@ import { config } from 'dotenv';
 config();
 const envVars = process.env;
 const configuration = Object.freeze({
-  KEY:  'qwertyuiopasdfghjklzxcvbnm123456',
+  KEY:  envVars.KEY,
   port : envVars.PORT,
   nodeEnv : envVars.NODE_ENV,
-  mongoURL: envVars.MONGO_URL
+  mongoURL: envVars.MONGO_URL,
+  password: envVars.PASSWORD
 
 });
 export default configuration;
+

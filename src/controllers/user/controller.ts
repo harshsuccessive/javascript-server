@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-
+import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
 import { config } from '../../config';
 import IRequest from '../../libs/IRequest';
@@ -113,7 +113,7 @@ class UserController {
 
     public async login(req: IRequest, res: Response, next: NextFunction) {
         const { email } = req.body;
-
+        console.log('Inside User Controller login')
         const user = new UserRepository();
 
         await user.getUser({ email })
@@ -128,7 +128,7 @@ class UserController {
 
                 const { password } = userData;
 
-                if (password !== req.body.password) {
+                if (!bcrypt.comparesync(req.body.password, password)) {
                     res.status(401).send({
                         err: 'Invalid Password',
                         code: 401
@@ -137,6 +137,7 @@ class UserController {
                 }
 
                 const token = jwt.sign(userData.toJSON(), config.KEY);
+                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60),
                 res.send({
                     message: 'Login Successfull',
                     status: 200,
