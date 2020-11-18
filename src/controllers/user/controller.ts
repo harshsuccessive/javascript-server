@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
-import { config } from '../../config';
+import configuration from '../../config/configuration';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
@@ -136,7 +136,7 @@ class UserController {
                     return;
                 }
 
-                const token = jwt.sign(userData.toJSON(), config.KEY);
+                const token = jwt.sign(userData.toJSON(), configuration.KEY);
                 expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60),
                 res.send({
                     message: 'Login Successfull',
