@@ -136,8 +136,8 @@ class UserController {
                     return;
                 }
 
-                const token = jwt.sign(userData.toJSON(), configuration.KEY);
-                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60),
+                const token = jwt.sign(userData.toJSON(), configuration.KEY,{
+                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60),});
                 res.send({
                     message: 'Login Successfull',
                     status: 200,
