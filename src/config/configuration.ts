@@ -1,9 +1,15 @@
 import { IConfig } from './IConfig';
+import { config } from 'dotenv';
 
-const enVars = require ('dotenv').config();
+config();
+const envVars = process.env;
+const configuration = Object.freeze({
+  KEY:  envVars.KEY,
+  port : envVars.PORT,
+  nodeEnv : envVars.NODE_ENV,
+  mongoURL: envVars.MONGO_URL,
+  password: envVars.PASSWORD
 
-console.log('Inside config', enVars);
+});
+export default configuration;
 
-const config: IConfig = enVars;
-
-export default Object.freeze(config);

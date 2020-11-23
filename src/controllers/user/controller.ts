@@ -1,80 +1,153 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import UserRepository from '../.././repositories/user/UserRepository';
-import config from '../../config/configuration';
+import * as bcrypt from 'bcrypt';
+import UserRepository from '../../repositories/user/UserRepository';
+import configuration from '../../config/configuration';
+import IRequest from '../../libs/IRequest';
 
 class UserController {
-    static instance: UserController;
-    static getInstance() {
-        if ( UserController.instance ) {
-            return UserController.instance;
-        }
-        UserController.instance = new UserController();
-        return UserController.instance;
-    }
+  public async get(req: Request, res: Response, next: NextFunction) {
 
-get( req: Request, res: Response, next: NextFunction ) {
-    try {
-       console.log( 'Inside GET method of User controller ' );
+    const user = new UserRepository();
+    const { id } = req.query;
 
-        res.send({
-        message: 'User fetchd successfully',
-        data: [
-            {
-                name: 'User1',
-                address: 'noida'
+    await user.getUser({ id })
+        .then((data) => {
+            if (data === null) {
+                throw undefined;
             }
-                ]
-        });
-    } catch (err) {
-        console.log( 'Inside Error', err );
-        }
-    }
-create( req: Request, res: Response, next: NextFunction ) {
-    try {
-        console.log( 'Inside POST method of User controller ' );
 
-        res.send({
-            message: 'User created successfully',
-            data: {
-                name: 'User1',
-                address: 'noida'
-            }
-        });
-    } catch (err) {
-            console.log( 'Inside Error', err );
-        }
-    }
-update( req: Request, res: Response, next: NextFunction ) {
-    try {
-        console.log( 'Inside Update method of User controller ' );
+            res.status(200).send({
+                message: 'User Fetched successfully',
 
-        res.send({
-            message: 'User updated successfully',
-            data: {
-                name: 'User1',
-                address: 'noida'
-            }
-        });
-    } catch (err) {
-            console.log( 'Inside Error', err );
-        }
-    }
-delete ( req: Request, res: Response, next: NextFunction ) {
-    try {
-            console.log( 'Inside delete method of User controller ' );
+                data,
 
-            res.send({
-                message: 'User deleted successfully',
-                data: {
-                    name: 'User1',
-                    address: 'noida'
-                }
+                code: 200
             });
-        } catch (err) {
-            console.log( 'Inside Error', err );
-        }
+
+        })
+        .catch(err => {
+            console.log(err);
+            res.send({
+                error: 'User not found',
+                code: 500
+            });
+        });
+
+}   public async me(req: IRequest, res: Response, next: NextFunction) {
+        const id = req.query;
+        const user = new UserRepository();
+
+        await user.getUser({ id })
+            .then((data) => {
+                res.status(200).send({
+                    message: 'User Fetched successfully',
+                    'data': { data },
+                    code: 200
+                });
+            });
     }
+
+    public async create(req: IRequest, res: Response, next: NextFunction) {
+        const { id, email, name, role, password } = req.body;
+        const creator = req.userData._id;
+
+        const user = new UserRepository();
+        await user.createUser({id, email, name, role, password }, creator)
+            .then(() => {
+                console.log(req.body);
+                res.send({
+                    message: 'User Created Successfully!',
+                    data: {
+                        'id': id,
+                        'name': name,
+                        'email': email,
+                        'role': role,
+                        'password': password
+                    },
+                    code: 200
+                });
+            });
+    }
+
+    public async update(req: IRequest, res: Response, next: NextFunction) {
+        const { id, dataToUpdate } = req.body;
+        console.log('id', id);
+        console.log('dataToUpdate', dataToUpdate);
+        const updator = req.userData._id;
+        const user = new UserRepository();
+        await user.updateUser( id, dataToUpdate, updator)
+        .then((result) => {
+            res.send({
+                data: result,
+                message: 'User Updated',
+                code: 200
+            });
+        })
+        .catch ((err) => {
+            res.send({
+                error: 'User Not Found for update',
+                code: 404
+            });
+        });
+    }
+
+    public async delete(req: IRequest, res: Response, next: NextFunction) {
+        const  id  = req.params.id;
+        const remover = req.userData._id;
+        const user = new UserRepository();
+        await user.deleteData(id, remover)
+        .then((result) => {
+            res.send({
+                message: 'Deleted successfully',
+                code: 200
+            });
+        })
+        .catch ((err) => {
+            res.send({
+                message: 'User not found to be deleted',
+                code: 404
+            });
+        });
+    }
+
+    public async login(req: IRequest, res: Response, next: NextFunction) {
+        const { email } = req.body;
+        console.log('Inside User Controller login');
+        const user = new UserRepository();
+
+        await user.getUser({ email })
+            .then((userData) => {
+                if (userData === null) {
+                    res.status(404).send({
+                        err: 'User Not Found',
+                        code: 404
+                    });
+                    return;
+                }
+
+                const { password } = userData;
+
+                if (!bcrypt.compareSync(req.body.password, password)) {
+                    res.status(401).send({
+                        err: 'Invalid Password',
+                        code: 401
+                    });
+                    return;
+                }
+
+                const token = jwt.sign( userData.toJSON(), configuration.KEY, {
+                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60), } );
+                res.send({
+                    message: 'Login Successfull',
+                    status: 200,
+                    'token': token
+                });
+                return;
+
+            });
+    }
+
 }
 
-export default UserController.getInstance();
+export default new UserController();
