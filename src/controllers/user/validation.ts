@@ -23,7 +23,6 @@ const config = {
             in: ['params']
         }
     },
-  
     get: {
         skip: {
             required: false,
@@ -64,5 +63,5 @@ const config = {
                 in: ['body'],
             }
         }
-    }
+    };
   export default config;

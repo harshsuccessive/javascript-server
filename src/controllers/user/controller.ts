@@ -113,7 +113,7 @@ class UserController {
 
     public async login(req: IRequest, res: Response, next: NextFunction) {
         const { email } = req.body;
-        console.log('Inside User Controller login')
+        console.log('Inside User Controller login');
         const user = new UserRepository();
 
         await user.getUser({ email })
@@ -136,8 +136,8 @@ class UserController {
                     return;
                 }
 
-                const token = jwt.sign(userData.toJSON(), configuration.KEY,{
-                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60),});
+                const token = jwt.sign( userData.toJSON(), configuration.KEY, {
+                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60), } );
                 res.send({
                     message: 'Login Successfull',
                     status: 200,
