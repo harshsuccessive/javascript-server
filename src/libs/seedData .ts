@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 import configuration from '../config/configuration';
 const userRepository: UserRepository = new UserRepository();
 export default () => {
-    userRepository.count()
+    userRepository.countData()
     .then(res => {
         if (res === 0) {
             console.log('data seeding in progress');
