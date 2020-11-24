@@ -50,6 +50,7 @@ class UserController {
 
     public async create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
+        console.log(req.userData);
         const creator = req.userData._id;
 
         const user = new UserRepository();

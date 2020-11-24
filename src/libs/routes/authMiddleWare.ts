@@ -12,6 +12,7 @@ export const authMiddleWare = ( module, permissionType ) => (req: IRequest, res:
     const token = req.headers.authorization;
     const decodedUser =  jwt.verify(token, configuration.KEY);
     console.log( 'User', decodedUser );
+    req.userData = decodedUser;
     const irole = decodedUser.role;
     console.log('Role is ', irole);
     if ( irole ) {
