@@ -6,6 +6,7 @@ import configuration from '../../config/configuration';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
+
 async get(req: IRequest, res: Response, next: NextFunction) {
     try {
         console.log('Inside get method of User Controller');
@@ -27,20 +28,26 @@ async get(req: IRequest, res: Response, next: NextFunction) {
         console.log('Inside err', err);
     }
 }
+
 public async me(req: IRequest, res: Response, next: NextFunction) {
-        const id = req.query;
-        const user = new UserRepository();
-
-        await user.getUser({ id })
-            .then((data) => {
-                res.status(200).send({
-                    message: 'User Fetched successfully',
-                    'data': { data },
-                    code: 200
-                });
-            });
+    const id = req.query;
+    const user = new UserRepository();
+    try {
+    const data = await user.getUser( id );
+    
+    res.status(200).send({
+        status: 'ok',
+        message: 'Me',
+        'data': data ,
+        });
+    } catch (err) {
+        console.log(err);
+        res.send({
+        error: 'User fetched not successfully',
+        code: 500
+        });
     }
-
+}    
     public async create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
         console.log(req.userData);
@@ -141,7 +148,27 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
 
             });
     }
+    public async search(req: IRequest, res: Response, next: NextFunction){
+        const searchField = req.query.srch
+        const user = new UserRepository;
+        user.find({
+            '$or': [
+                {name: {$regex: searchField, $options: '$i' } },
+                {email: {$regex: searchField, $options: '$i'} }
+            ]
+        })
 
+        .then(data=>{
+            res.send(data);
+        })
+
+        .catch ((err) => {
+            res.send({
+                message: 'no results',
+                code: 404
+            });
+        });
+    }
 }
 
 export default new UserController();
