@@ -54,7 +54,7 @@ class Server {
 
 
 
-    run(){
+    run() {
         const {app, config: { port }} = this;
         Database.open('mongodb://localhost:27017/express-training')
         .then( ( res ) => {

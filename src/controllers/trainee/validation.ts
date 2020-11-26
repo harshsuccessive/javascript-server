@@ -4,7 +4,7 @@ const config = { create:
              required: true,
              string: true,
              in: ['body'],
-             custom: function (value) {
+             custom: (value) => {
                  console.log('Value', value);
                  throw {
                      error: 'Error Occured', message: 'Message'
@@ -50,7 +50,7 @@ const config = { create:
             in: ['body'],
             required: true,
             isObject: true,
-            custom: function (dataToUpdate) {
+            custom: (dataToUpdate) => {
                 console.log('dataToUpdate', dataToUpdate);
                  throw {
                      error: 'Error Occured', message: 'Message'
