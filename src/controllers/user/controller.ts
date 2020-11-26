@@ -41,7 +41,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
     const user = new UserRepository();
     try {
     const data = await user.getUser( id );
-    
+
     res.status(200).send({
         status: 'ok',
         message: 'Me',
