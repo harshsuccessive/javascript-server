@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from './swagger.json'
+import * as swaggerDocument from './swagger.json';
 
 import  errorHandler  from './libs/routes/errorHandler';
 import  notFoundRoute from './libs/routes/notFoundRoute';

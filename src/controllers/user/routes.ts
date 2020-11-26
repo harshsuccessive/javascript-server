@@ -18,7 +18,7 @@ UserRouter.delete('/:id', authMiddleWare('getUser1', 'Delete'), validationHandle
     UserController.delete);
 UserRouter.post('/login', validationHandler(validation.login), UserController.login);
 UserRouter.get('/me', authMiddleWare('getUsers', 'read'), UserController.me);
-UserRouter.get('/search', authMiddleWare('getUsers', 'read'), UserController.search )
+UserRouter.get('/search', authMiddleWare('getUsers', 'read'), UserController.search );
 
 
 

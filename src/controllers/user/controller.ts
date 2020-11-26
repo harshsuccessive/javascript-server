@@ -34,7 +34,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
     const user = new UserRepository();
     try {
     const data = await user.getUser( id );
-    
+
     res.status(200).send({
         status: 'ok',
         message: 'Me',
@@ -47,7 +47,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         code: 500
         });
     }
-}    
+}
     public async create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
         console.log(req.userData);
@@ -148,9 +148,9 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
 
             });
     }
-    public async search(req: IRequest, res: Response, next: NextFunction){
-        const searchField = req.query.srch
-        const user = new UserRepository;
+    public async search(req: IRequest, res: Response, next: NextFunction) {
+        const searchField = req.query.srch;
+        const user = new UserRepository();
         user.find({
             '$or': [
                 {name: {$regex: searchField, $options: '$i' } },
@@ -158,7 +158,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
             ]
         })
 
-        .then(data=>{
+        .then ( data => {
             res.send(data);
         })
 
