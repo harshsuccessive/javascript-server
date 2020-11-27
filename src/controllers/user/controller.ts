@@ -1,17 +1,17 @@
 import * as jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-
+import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
-import { config } from '../../config';
+import configuration from '../../config/configuration';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
-  public  get(req: Request, res: Response, next: NextFunction) {
+  public get(req: Request, res: Response, next: NextFunction) {
 
     const user = new UserRepository();
     const { id } = req.query;
 
-     user.getUser({ id })
+    user.getUser({ id })
         .then((data) => {
             if (data === null) {
                 throw undefined;
@@ -35,7 +35,8 @@ class UserController {
         });
 
 }
-public  me(req: IRequest, res: Response, next: NextFunction) {
+
+public me(req: IRequest, res: Response, next: NextFunction) {
     const id = req.query;
     const user = new UserRepository();
     try {
@@ -57,6 +58,7 @@ public  me(req: IRequest, res: Response, next: NextFunction) {
 
     public create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
+        console.log(req.userData);
         const creator = req.userData._id;
 
         const user = new UserRepository();
@@ -94,7 +96,7 @@ public  me(req: IRequest, res: Response, next: NextFunction) {
         .catch ((err) => {
             res.send({
                 error: 'User Not Found for update',
-                code: 404
+                code: 40
             });
         });
     }
@@ -103,24 +105,24 @@ public  me(req: IRequest, res: Response, next: NextFunction) {
         const  id  = req.params.id;
         const remover = req.userData._id;
         const user = new UserRepository();
-        user.deleteData(id, remover)
-        .then((result) => {
-            res.send({
-                message: 'Deleted successfully',
-                code: 200
+        try {
+           user.deleteData(id, remover);
+           res.send({
+             status: 'ok',
+             message: 'User Deleted successfully',
             });
-        })
-        .catch ((err) => {
+          }
+          catch (err) {
             res.send({
-                message: 'User not found to be deleted',
-                code: 404
+              message: 'User not found to be deleted',
+              code: 404
             });
-        });
-    }
+          }
+        }
 
     public login(req: IRequest, res: Response, next: NextFunction) {
         const { email } = req.body;
-
+        console.log('Inside User Controller login');
         const user = new UserRepository();
 
         user.getUser({ email })
@@ -135,7 +137,7 @@ public  me(req: IRequest, res: Response, next: NextFunction) {
 
                 const { password } = userData;
 
-                if (password !== req.body.password) {
+                if (!bcrypt.compareSync(req.body.password, password)) {
                     res.status(401).send({
                         err: 'Invalid Password',
                         code: 401
@@ -143,7 +145,8 @@ public  me(req: IRequest, res: Response, next: NextFunction) {
                     return;
                 }
 
-                const token = jwt.sign(userData.toJSON(), config.KEY);
+                const token = jwt.sign( userData.toJSON(), configuration.KEY, {
+                expiresIn: Math.floor(Date.now() / 1000) + ( 15 * 60), } );
                 res.send({
                     message: 'Login Successfull',
                     status: 200,
