@@ -11,7 +11,7 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
     }
 
     public create(data, creator) {
-        return super.createUser(data, creator);
+        return super.create(data, creator);
     }
 
     public updateUser(id, data, updator) {

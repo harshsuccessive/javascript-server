@@ -42,7 +42,7 @@ public create(req: IRequest, res: Response, next: NextFunction) {
   const creator = req.userData._id;
   const user = new UserRepository();
   try {
-    const result = user.createUser({id, email, name, role, password }, creator);
+    const result = user.create({id, email, name, role, password }, creator);
     console.log(req.body);
     res.send({
       status: 'ok',

@@ -19,7 +19,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return this.model.findOne(query).lean();
     }
 
-    public createUser(data: any, creator): Promise<D> {
+    public create(data: any, creator): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
         const modelData = {
