@@ -113,11 +113,11 @@ public delete(req: IRequest, res: Response, next: NextFunction) {
 
   // To fetch the authorization token
 
-  public login(req: IRequest, res: Response, next: NextFunction) {
+  public async login(req: IRequest, res: Response, next: NextFunction) {
   const { email } = req.body;
   const user = new UserRepository();
   try {
-    const userData =  user.getUser({ email });
+    const userData =  await user.getUser({ email });
     if (userData === null) {
       res.status(404).send({
         err: 'User Not Found',
