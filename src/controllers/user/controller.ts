@@ -6,12 +6,12 @@ import { config } from '../../config';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
-  public async get(req: Request, res: Response, next: NextFunction) {
+  public  get(req: Request, res: Response, next: NextFunction) {
 
     const user = new UserRepository();
     const { id } = req.query;
 
-    await user.getUser({ id })
+     user.getUser({ id })
         .then((data) => {
             if (data === null) {
                 throw undefined;
@@ -35,11 +35,11 @@ class UserController {
         });
 
 }
-public async me(req: IRequest, res: Response, next: NextFunction) {
+public  me(req: IRequest, res: Response, next: NextFunction) {
     const id = req.query;
     const user = new UserRepository();
     try {
-    const data = await user.getUser( id );
+    const data = user.getUser( id );
 
     res.status(200).send({
         status: 'ok',
@@ -55,12 +55,12 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
     }
 }
 
-    public async create(req: IRequest, res: Response, next: NextFunction) {
+    public create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
         const creator = req.userData._id;
 
         const user = new UserRepository();
-        await user.createUser({id, email, name, role, password }, creator)
+        user.createUser({id, email, name, role, password }, creator)
             .then(() => {
                 console.log(req.body);
                 res.send({
@@ -77,13 +77,13 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
             });
     }
 
-    public async update(req: IRequest, res: Response, next: NextFunction) {
+    public update(req: IRequest, res: Response, next: NextFunction) {
         const { id, dataToUpdate } = req.body;
         console.log('id', id);
         console.log('dataToUpdate', dataToUpdate);
         const updator = req.userData._id;
         const user = new UserRepository();
-        await user.updateUser( id, dataToUpdate, updator)
+        user.updateUser( id, dataToUpdate, updator)
         .then((result) => {
             res.send({
                 data: result,
@@ -99,11 +99,11 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         });
     }
 
-    public async delete(req: IRequest, res: Response, next: NextFunction) {
+    public delete(req: IRequest, res: Response, next: NextFunction) {
         const  id  = req.params.id;
         const remover = req.userData._id;
         const user = new UserRepository();
-        await user.deleteData(id, remover)
+        user.deleteData(id, remover)
         .then((result) => {
             res.send({
                 message: 'Deleted successfully',
@@ -118,12 +118,12 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         });
     }
 
-    public async login(req: IRequest, res: Response, next: NextFunction) {
+    public login(req: IRequest, res: Response, next: NextFunction) {
         const { email } = req.body;
 
         const user = new UserRepository();
 
-        await user.getUser({ email })
+        user.getUser({ email })
             .then((userData) => {
                 if (userData === null) {
                     res.status(404).send({
