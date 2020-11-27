@@ -62,7 +62,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         const creator = req.userData._id;
 
         const user = new UserRepository();
-        await user.createUser({id, email, name, role, password }, creator)
+        await user.create({id, email, name, role, password }, creator)
             .then(() => {
                 console.log(req.body);
                 res.send({

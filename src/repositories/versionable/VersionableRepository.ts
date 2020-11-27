@@ -21,8 +21,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return this.model.find(query);
     }
 
-
-    public async createUser(data: any, creator): Promise<D> {
+    public create(data: any, creator): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
         const model = {
@@ -33,7 +32,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
             createdAt: Date.now(),
 
         };
-        return await this.model.create(model);
+        return this.model.create(model);
     }
 
 
