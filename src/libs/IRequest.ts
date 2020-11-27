@@ -1,10 +1,8 @@
-import { Request } from "express";
+import { Request } from 'express';
 
-interface IRequest extends Request {
-    body: any,
-    param: any,
-    query: any,
-    user: any
+export default interface IRequest extends Request {
+  body: any;
+  query: any;
+  params: any;
+  userData: any;
 }
-
-export default IRequest;
