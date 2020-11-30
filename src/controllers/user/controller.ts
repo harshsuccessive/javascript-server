@@ -12,6 +12,27 @@ async get(req: IRequest, res: Response, next: NextFunction) {
         console.log('Inside get method of User Controller');
 
         const userRepository = new UserRepository();
+        const searchField = req.query.srch;
+        const user = new UserRepository();
+        if(searchField){
+        user.find({
+            '$or': [
+                {name: {$regex: searchField, $options: '$i' } },
+                {email: {$regex: searchField, $options: '$i'} }
+            ]
+        })
+
+        .then ( data => {
+            res.send(data);
+        })
+
+        .catch ((err) => {
+            res.send({
+                message: 'no results',
+                code: 404
+            });
+        });
+    }
         const sort = {};
         sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
         console.log(sort);
@@ -94,7 +115,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
     }
 
     public async delete(req: IRequest, res: Response, next: NextFunction) {
-        const  id  = req.params.id;
+        const  id  = req.query.id;
         const remover = req.userData._id;
         const user = new UserRepository();
         await user.deleteData(id, remover)
@@ -147,27 +168,6 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
                 return;
 
             });
-    }
-    public async search(req: IRequest, res: Response, next: NextFunction) {
-        const searchField = req.query.srch;
-        const user = new UserRepository();
-        user.find({
-            '$or': [
-                {name: {$regex: searchField, $options: '$i' } },
-                {email: {$regex: searchField, $options: '$i'} }
-            ]
-        })
-
-        .then ( data => {
-            res.send(data);
-        })
-
-        .catch ((err) => {
-            res.send({
-                message: 'no results',
-                code: 404
-            });
-        });
     }
 }
 

@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from './swagger.json';
+import * as swaggerJsDoc from 'swagger-jsdoc';
 
 import  errorHandler  from './libs/routes/errorHandler';
 import  notFoundRoute from './libs/routes/notFoundRoute';
@@ -21,6 +21,29 @@ class Server {
         return this;
     }
 
+    initSwagger = () => {
+        const options = {
+            definition: {
+                info: {
+                    title: 'JavaScript-Server API Swagger',
+                    version: '1.0.0',
+                },
+                securityDefinitions: {
+                    Bearer: {
+                        type: 'apiKey',
+                        name: 'Authorization',
+                        in: 'headers'
+                    }
+                }
+            },
+            basePath: '/api',
+            swagger: '4.1',
+            apis: ['./src/controllers/**/routes.ts'],
+        };
+        const swaggerSpec = swaggerJsDoc(options);
+        return swaggerSpec;
+    }
+
     setupRoutes() {
 
 
@@ -37,7 +60,7 @@ class Server {
         });
 
         this.app.use('/api', routes);
-        this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        this.app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(this.initSwagger()));
 
 
 
