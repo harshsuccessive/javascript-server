@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, query } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
 import configuration from '../../config/configuration';
@@ -11,15 +11,18 @@ async get(req: IRequest, res: Response, next: NextFunction) {
         console.log('Inside get method of User Controller');
 
         const userRepository = new UserRepository();
+        const { sortedBy, sortedOrder, limit, skip } = req.query;
         const sort = {};
-        sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
+        sort[`${sortedBy}`] = sortedOrder;
         console.log(sort);
-        const extractedData = await userRepository.getAll(req.body).sort(sort).skip(Number(req.query.skip)).limit(Number(req.query.limit));
+        const userList = await userRepository.getAll(req.body, {}, { skip, limit}, sort);
+        const totalCount = await userRepository.count(req.body);
+        const count = userList.length;
         res.status(200).send({
             message: 'trainee fetched successfully',
-            totalCount: await userRepository.count(req.body),
-            count: extractedData.length,
-            data: [extractedData],
+            TotalCount: totalCount,
+            Count: count,
+            data: [ userList ],
             status: 'success',
         });
     }
