@@ -18,7 +18,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
     public findOne(query) {
         return this.model.findOne(query).lean();
     }
-    protected find(query = {}): DocumentQuery<D[], D> {
+    public find(query = {}): DocumentQuery<D[], D> {
         return this.model.find(query);
     }
 

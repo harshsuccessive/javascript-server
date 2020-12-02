@@ -6,11 +6,28 @@ import configuration from '../../config/configuration';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
+
 async get(req: IRequest, res: Response, next: NextFunction) {
     try {
         console.log('Inside get method of User Controller');
-
         const userRepository = new UserRepository();
+        let searchString = req.query.search as string || '';
+            console.log(searchString);
+            let column = '';
+            const regexName = /^[a-z]+$/i;
+            const regexEmail = /\b[a-zA-Z0-9+_.-]+@[a-z]+\.[a-z]{2,}\b/;
+            if (searchString) {
+                if (regexName.test(searchString)) {
+                    column = 'name';
+                }
+                if (regexEmail.test(searchString)) {
+                    column = 'email';
+                }
+            }
+            else {
+                searchString = undefined;
+                column = undefined;
+            }
         const { sortedBy, sortedOrder, limit, skip } = req.query;
         const sort = {};
         sort[`${sortedBy}`] = sortedOrder;
@@ -50,7 +67,6 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         });
     }
 }
-
     public async create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
         console.log(req.userData);
@@ -97,7 +113,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
     }
 
     public async delete(req: IRequest, res: Response, next: NextFunction) {
-        const  id  = req.params.id;
+        const  id  = req.query.id;
         const remover = req.userData._id;
         const user = new UserRepository();
         await user.deleteData(id, remover)
@@ -151,7 +167,6 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
 
             });
     }
-
 }
 
 export default new UserController();

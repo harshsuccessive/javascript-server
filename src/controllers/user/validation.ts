@@ -20,7 +20,7 @@ const config = {
         id: {
             required: true,
             errorMessage: 'Id is required',
-            in: ['params']
+            in: ['query']
         }
     },
     get: {
