@@ -2,7 +2,7 @@ const config = {
     create: {
         id: {
             required: true,
-            string: false,
+            string: true,
             in: ['body'],
             custom: (value) => {
                 console.log('Value', value);
@@ -11,7 +11,7 @@ const config = {
         },
         name: {
             required: true,
-            regex: '',
+            regex: /^[a-zA-Z]+$/,
             in: ['body'],
             errorMessage: 'Name is required',
         }
@@ -23,7 +23,6 @@ const config = {
             in: ['params']
         }
     },
-
     get: {
         skip: {
             required: false,

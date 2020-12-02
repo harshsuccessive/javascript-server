@@ -22,7 +22,8 @@ const config = { create:
      delete: {
           id: {
               required: true,
-              errorMessage: 'Id is required', in: ['params']
+              errorMessage: 'Id is required',
+              in: ['params']
             }
         },
         get: {

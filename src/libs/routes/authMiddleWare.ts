@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import { hasPermission } from '../permission';
 import IRequest from '../../libs/IRequest';
+import configuration from '../../config/configuration';
 
 export const authMiddleWare = ( module, permissionType ) => (req: IRequest, res: Response, next: NextFunction ) => {
     try {
@@ -9,8 +10,9 @@ export const authMiddleWare = ( module, permissionType ) => (req: IRequest, res:
     console.log( 'the config is ' , module, permissionType );
     console.log( 'Header is ' , req.headers.authorization);
     const token = req.headers.authorization;
-    const decodedUser =  jwt.verify(token, 'qwertyuiopasdfghjklzxcvbnm123456');
+    const decodedUser =  jwt.verify(token, configuration.KEY);
     console.log( 'User', decodedUser );
+    req.userData = decodedUser;
     const irole = decodedUser.role;
     req.userData = decodedUser;
     if ( irole ) {

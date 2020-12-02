@@ -14,10 +14,10 @@ UserRouter.post('/create', authMiddleWare('getUsers', 'read'), validationHandler
     UserController.create);
 UserRouter.put('/update', authMiddleWare('getUsers', 'read'), validationHandler(validation.update),
     UserController.update);
-UserRouter.delete('/:id', authMiddleWare('getUsers', 'read'), validationHandler(validation.delete),
+UserRouter.delete('/:id', authMiddleWare('getUser1', 'Delete'), validationHandler(validation.delete),
     UserController.delete);
 UserRouter.post('/login', validationHandler(validation.login), UserController.login);
-UserRouter.get('/me', authMiddleWare('getUsers', 'all'), UserController.me);
+UserRouter.get('/me', authMiddleWare('getUsers', 'read'), UserController.me);
 
 
 
