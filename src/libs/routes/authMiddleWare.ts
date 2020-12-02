@@ -14,10 +14,10 @@ export const authMiddleWare = ( module, permissionType ) => (req: IRequest, res:
     console.log( 'User', decodedUser );
     req.userData = decodedUser;
     const irole = decodedUser.role;
-    console.log('Role is ', irole);
+    req.userData = decodedUser;
     if ( irole ) {
         if ( hasPermission( module, irole, permissionType )) {
-            console.log('true');
+            console.log('true have permission');
             next();
         }
         else {

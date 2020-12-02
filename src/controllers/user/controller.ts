@@ -27,19 +27,26 @@ async get(req: IRequest, res: Response, next: NextFunction) {
         console.log('Inside err', err);
     }
 }
-public async me(req: IRequest, res: Response, next: NextFunction) {
-        const id = req.query;
-        const user = new UserRepository();
 
-        await user.getUser({ id })
-            .then((data) => {
-                res.status(200).send({
-                    message: 'User Fetched successfully',
-                    'data': { data },
-                    code: 200
-                });
-            });
+public async me(req: IRequest, res: Response, next: NextFunction) {
+    const id = req.query;
+    const user = new UserRepository();
+    try {
+    const data = await user.getUser( id );
+
+    res.status(200).send({
+        status: 'ok',
+        message: 'Me',
+        'data': data ,
+        });
+    } catch (err) {
+        console.log(err);
+        res.send({
+        error: 'User fetched not successfully',
+        code: 500
+        });
     }
+}
 
     public async create(req: IRequest, res: Response, next: NextFunction) {
         const { id, email, name, role, password } = req.body;
@@ -47,7 +54,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         const creator = req.userData._id;
 
         const user = new UserRepository();
-        await user.createUser({id, email, name, role, password }, creator)
+        await user.create({id, email, name, role, password }, creator)
             .then(() => {
                 console.log(req.body);
                 res.send({
