@@ -1,39 +1,34 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, query } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
 import configuration from '../../config/configuration';
 import IRequest from '../../libs/IRequest';
 
 class UserController {
-  public async get(req: Request, res: Response, next: NextFunction) {
+async get(req: IRequest, res: Response, next: NextFunction) {
+    try {
+        console.log('Inside get method of User Controller');
 
-    const user = new UserRepository();
-    const { id } = req.query;
-
-    await user.getUser({ id })
-        .then((data) => {
-            if (data === null) {
-                throw undefined;
-            }
-
-            res.status(200).send({
-                message: 'User Fetched successfully',
-
-                data,
-
-                code: 200
-            });
-
-        })
-        .catch(err => {
-            console.log(err);
-            res.send({
-                error: 'User not found',
-                code: 500
-            });
+        const userRepository = new UserRepository();
+        const { sortedBy, sortedOrder, limit, skip } = req.query;
+        const sort = {};
+        sort[`${sortedBy}`] = sortedOrder;
+        console.log(sort);
+        const userList = await userRepository.getAll(req.body, {}, { skip, limit}, sort);
+        const totalCount = await userRepository.count(req.body);
+        const count = userList.length;
+        res.status(200).send({
+            message: 'trainee fetched successfully',
+            TotalCount: totalCount,
+            Count: count,
+            data: [ userList ],
+            status: 'success',
         });
-
+    }
+    catch (err) {
+        console.log('Inside err', err);
+    }
 }
 
 public async me(req: IRequest, res: Response, next: NextFunction) {

@@ -44,6 +44,13 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
     }
 
     public countData() {
-        return super.count();
+        return userModel.countDocuments();
+    }
+
+    public getAll(query: any, projection: any = {}, options: any = {}, sort: any = {}): mongoose.DocumentQuery<IUserModel[], IUserModel> {
+        options.limit = options.limit || 0;
+        options.skip = options.skip || 0;
+        const finalQuery = { deletedAt: undefined, ...query };
+        return this.model.find(finalQuery, projection, options).sort({...sort});
     }
 }

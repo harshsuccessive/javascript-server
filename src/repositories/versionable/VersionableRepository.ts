@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { DocumentQuery, Query } from 'mongoose';
 
 export default class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
-    private model: M;
+    public model: M;
     constructor(model) {
         this.model = model;
     }
@@ -11,8 +11,9 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return String(mongoose.Types.ObjectId());
     }
 
-    public count() {
-        return this.model.countDocuments();
+    public count(query: any): Query<number> {
+        const finalQuery = { deletedAt: undefined, ...query };
+        return this.model.countDocuments(finalQuery);
     }
     public findOne(query) {
         return this.model.findOne(query).lean();
@@ -39,6 +40,13 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
     public getUser(data: any) {
         return this.model.findOne(data);
+    }
+
+    public getAll(query: any, projection: any = {}, options: any = {}, sort: any = {}): DocumentQuery<D[], D> {
+        options.limit = options.limit || 0;
+        options.skip = options.skip || 0;
+        const finalQuery = { deletedAt: undefined, ...query };
+        return this.model.find(finalQuery, projection, options).sort({...sort});
     }
 
     public async update(id: string, dataToUpdate: any, updator) {
