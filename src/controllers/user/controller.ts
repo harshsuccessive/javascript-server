@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction, query } from 'express';
 import * as bcrypt from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
 import configuration from '../../config/configuration';
@@ -10,38 +10,36 @@ class UserController {
 async get(req: IRequest, res: Response, next: NextFunction) {
     try {
         console.log('Inside get method of User Controller');
-
         const userRepository = new UserRepository();
-        const searchField = req.query.srch;
-        const user = new UserRepository();
-        if(searchField){
-        user.find({
-            '$or': [
-                {name: {$regex: searchField, $options: '$i' } },
-                {email: {$regex: searchField, $options: '$i'} }
-            ]
-        })
-
-        .then ( data => {
-            res.send(data);
-        })
-
-        .catch ((err) => {
-            res.send({
-                message: 'no results',
-                code: 404
-            });
-        });
-    }
+        let searchString = req.query.search as string || '';
+            console.log(searchString);
+            let column = '';
+            const regexName = /^[a-z]+$/i;
+            const regexEmail = /\b[a-zA-Z0-9+_.-]+@[a-z]+\.[a-z]{2,}\b/;
+            if (searchString) {
+                if (regexName.test(searchString)) {
+                    column = 'name';
+                }
+                if (regexEmail.test(searchString)) {
+                    column = 'email';
+                }
+            }
+            else {
+                searchString = undefined;
+                column = undefined;
+            }
+        const { sortedBy, sortedOrder, limit, skip } = req.query;
         const sort = {};
-        sort[`${req.query.sortedBy}`] = req.query.sortedOrder;
+        sort[`${sortedBy}`] = sortedOrder;
         console.log(sort);
-        const extractedData = await userRepository.getAll(req.body).sort(sort).skip(Number(req.query.skip)).limit(Number(req.query.limit));
+        const userList = await userRepository.getAll(req.body, {}, { skip, limit}, sort);
+        const totalCount = await userRepository.count(req.body);
+        const count = userList.length;
         res.status(200).send({
             message: 'trainee fetched successfully',
-            totalCount: await userRepository.count(req.body),
-            count: extractedData.length,
-            data: [extractedData],
+            TotalCount: totalCount,
+            Count: count,
+            data: [ userList ],
             status: 'success',
         });
     }
@@ -75,7 +73,7 @@ public async me(req: IRequest, res: Response, next: NextFunction) {
         const creator = req.userData._id;
 
         const user = new UserRepository();
-        await user.createUser({id, email, name, role, password }, creator)
+        await user.create({id, email, name, role, password }, creator)
             .then(() => {
                 console.log(req.body);
                 res.send({

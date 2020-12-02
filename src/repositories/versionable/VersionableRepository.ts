@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import { DocumentQuery, Query } from 'mongoose';
 
 export default class VersionableRepository<D extends mongoose.Document, M extends mongoose.Model<D>> {
-    private model: M;
+    public model: M;
     constructor(model) {
         this.model = model;
     }
@@ -22,8 +22,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return this.model.find(query);
     }
 
-
-    public async createUser(data: any, creator): Promise<D> {
+    public create(data: any, creator): Promise<D> {
         const id = VersionableRepository.generateObjectId();
 
         const model = {
@@ -34,7 +33,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
             createdAt: Date.now(),
 
         };
-        return await this.model.create(model);
+        return this.model.create(model);
     }
 
 
@@ -43,9 +42,11 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
         return this.model.findOne(data);
     }
 
-    public getAll(query: any, projection: any = {}, options: any = {}): DocumentQuery<D[], D> {
+    public getAll(query: any, projection: any = {}, options: any = {}, sort: any = {}): DocumentQuery<D[], D> {
+        options.limit = options.limit || 0;
+        options.skip = options.skip || 0;
         const finalQuery = { deletedAt: undefined, ...query };
-        return this.model.find(finalQuery, projection, options);
+        return this.model.find(finalQuery, projection, options).sort({...sort});
     }
 
     public async update(id: string, dataToUpdate: any, updator) {

@@ -18,7 +18,7 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
          const hashedPassword = bcrypt.hashSync(rawPassword, salt);
          data.password = hashedPassword;
          console.log('data pass: ', data.password);
-         return super.createUser(data, creator);
+         return super.create(data, creator);
     }
      public updateUser(id, data, updator) {
        if ('password' in data) {
@@ -45,5 +45,12 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
 
     public countData() {
         return userModel.countDocuments();
+    }
+
+    public getAll(query: any, projection: any = {}, options: any = {}, sort: any = {}): mongoose.DocumentQuery<IUserModel[], IUserModel> {
+        options.limit = options.limit || 0;
+        options.skip = options.skip || 0;
+        const finalQuery = { deletedAt: undefined, ...query };
+        return this.model.find(finalQuery, projection, options).sort({...sort});
     }
 }
